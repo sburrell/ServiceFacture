@@ -16,7 +16,7 @@ import com.models.Facture;
 
 // @Path here defines class level path. Identifies the URI path that&nbsp;
 // a resource class will serve requests for.
-@Path("FactureService")
+@Path("ValidatePaymentService")
 public class ValidatePaymentService {
 
 	// @GET here defines, this method will method will process HTTP GET
@@ -24,7 +24,7 @@ public class ValidatePaymentService {
 	@GET
 	@Path("/id/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getFactureById(@PathParam("id") String strId) {			
+	public String validateFacturePayment(@PathParam("id") String strId) {			
 		Facture facture  = Facture.getFactureByCommandID(strId); 
 		facture.setIsPaid(true);
 		notifyDeliveryService(facture);		

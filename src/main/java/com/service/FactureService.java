@@ -9,9 +9,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
-import com.google.gson.Gson;
 
+import com.google.gson.Gson;
 import com.models.Facture;
+import com.models.Product;
 
 
 // @Path here defines class level path. Identifies the URI path that&nbsp;
@@ -30,5 +31,17 @@ public class FactureService {
 		String response  = gson.toJson(facture);
 		return response;
 	}
+	
+	// @GET here defines, this method will method will process HTTP GET
+		// requests.
+		@GET
+		@Path("/product/{id}")
+		@Produces(MediaType.APPLICATION_JSON)
+		public String getProduct(@PathParam("id") String strId) {		
+			Product p1 = new Product("book", 30.00, 3);
+			Gson gson = new Gson();
+			String response  = gson.toJson(p1);
+			return response;
+		}
 
 }
