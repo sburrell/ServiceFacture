@@ -13,7 +13,7 @@ import com.google.gson.Gson;
  
 
 public class JsonReader {
-	
+		
 	private static String readAll(Reader rd) throws IOException {
 	    StringBuilder sb = new StringBuilder();
 	    int cp;
@@ -23,7 +23,7 @@ public class JsonReader {
 	    return sb.toString();
 	  }
 
-	  public static Product readJsonFromUrl(String url) throws IOException 
+	  public static boolean readJsonFromUrl(String url) throws IOException 
 	  {
 	    InputStream is = new URL(url).openStream();
 	    try 
@@ -31,32 +31,19 @@ public class JsonReader {
 	      BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
 	      String jsonText = readAll(rd);
 	      Gson gson = new Gson();
-	      Product p = gson.fromJson(url, Product.class);
-	      return p;
+	      Facture f = gson.fromJson(jsonText, Facture.class);
+	      if(f != null)
+	      {
+	    	  return true;
+	      }
+	      else
+	      {
+	    	  return false;
+	      }
 	    } 
 	    finally 
 	    {
 	      is.close();
 	    }
 	  }
-
-	public static void main(String[] args) {
-		 
-		Gson gson = new Gson();
-	 
-		try {
-	 
-			BufferedReader br = new BufferedReader(
-				new FileReader("c:\\file.json"));
-	 
-			//convert the json string back to object
-			Product p1 = gson.fromJson(br, Product.class);
-	 
-			System.out.println(p1);
-	 
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	 
-	    }
 }

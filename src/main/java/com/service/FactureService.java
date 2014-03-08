@@ -33,15 +33,26 @@ public class FactureService {
 	}
 	
 	// @GET here defines, this method will method will process HTTP GET
-		// requests.
-		@GET
-		@Path("/product/{id}")
-		@Produces(MediaType.APPLICATION_JSON)
-		public String getProduct(@PathParam("id") String strId) {		
-			Product p1 = new Product("book", 30.00, 3);
-			Gson gson = new Gson();
-			String response  = gson.toJson(p1);
-			return response;
-		}
+	// requests.
+	@GET
+	@Path("/product/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getProduct(@PathParam("id") String strId) {		
+		Product p1 = new Product("book", 30.00, 3);
+		Gson gson = new Gson();
+		String response  = gson.toJson(p1);
+		return response;
+	}
+	
+	// @GET here defines, this method will method will process HTTP GET
+	// requests.
+	@GET
+	@Path("/commande/{json}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String getCommandeFromJson(@PathParam("json") String json) {		
+		Gson gson = new Gson();
+		Product p1  = gson.fromJson(json, Product.class);
+		return "ok";
+	}
 
 }
