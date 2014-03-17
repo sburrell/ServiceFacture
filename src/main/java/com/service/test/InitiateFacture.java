@@ -22,7 +22,6 @@ public class InitiateFacture {
 		Facture facture = new Facture();
 		JsonReader jr = new JsonReader();
 		Boolean success = jr.readJsonFromUrl("http://localhost:8080/RestfulExo/rest/FactureService/id/1");
-		
 		assertTrue(success);
 	}
 
