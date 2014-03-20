@@ -1,5 +1,9 @@
 package com.service;
 
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.net.URL;
+import java.net.URLConnection;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -24,16 +28,25 @@ public class ValidatePaymentService {
 	@GET
 	@Path("/id/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String validateFacturePayment(@PathParam("id") String strId) {			
+	public String validateFacturePayment(@PathParam("id") String strId) throws IOException {			
 		Facture facture  = Facture.getFactureByCommandID(strId); 
 		facture.setIsPaid(true);
 		notifyDeliveryService(facture);		
 		return "ok";
 	}
 
-	private void notifyDeliveryService(Facture facture) {
+	private void notifyDeliveryService(Facture facture) throws IOException {
 		Facture validatedFacture = facture;
-		//create json to send to delivery
+		Gson gson = new Gson();
+		gson.toJson(facture);
+		URL myURL = new URL("http://jarrodssite.com/DeliveryService/notify");
+	    URLConnection myURLConnection = myURL.openConnection();
+	    myURLConnection.connect();
+	    myURLConnection.setDoOutput(true);
+	    OutputStreamWriter out = new OutputStreamWriter(myURLConnection.getOutputStream());
+	    out.write("string=" + gson);
+	    out.close();
+	    
 	}
 	
 

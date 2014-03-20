@@ -47,7 +47,7 @@ public class FactureService {
 	// @GET here defines, this method will method will process HTTP GET
 	// requests.
 	@GET
-	@Path("/commande/{json}")
+	@Path("/commande/{id}.json")
 	@Produces(MediaType.APPLICATION_JSON)
 	public String getCommandeFromJson(@PathParam("json") String json) {		
 		Gson gson = new Gson();
