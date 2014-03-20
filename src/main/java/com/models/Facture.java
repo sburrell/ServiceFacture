@@ -7,32 +7,30 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class Facture {
-	private UUID id;
+	private int id;
 	private Date datetime;
-	private UUID userId;
+	private int userId;
 	private double total;
 	private ArrayList<Product> products;
 	private boolean IsPaid;
 	
 	public Facture() {
 		super();
-		this.id = UUID.randomUUID();
 	}
 
-	public Facture(Date datetime, UUID userId, ArrayList<Product> products) {
+	public Facture(Date datetime, int userId, ArrayList<Product> products) {
 		super();
-		this.id = UUID.randomUUID();
 		this.setDatetime(datetime);
 		this.setUserId(userId);
 		this.setProducts(products);	
 		this.IsPaid = false;
 	}
 
-	public UUID getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -44,11 +42,11 @@ public class Facture {
 		this.datetime = datetime;
 	}
 
-	public UUID getUserId() {
+	public int getUserId() {
 		return userId;
 	}
 
-	public void setUserId(UUID userId) {
+	public void setUserId(int userId) {
 		this.userId = userId;
 	}
 
@@ -113,7 +111,7 @@ public class Facture {
 		tmpproducts.add(p1);
 		tmpproducts.add(p2);
 		tmpproducts.add(p3);
-		Facture myFacture = new Facture(new Date(System.currentTimeMillis()), UUID.randomUUID(), tmpproducts);
+		Facture myFacture = new Facture(new Date(System.currentTimeMillis()), 1, tmpproducts);
 		return myFacture;
 	}
 	

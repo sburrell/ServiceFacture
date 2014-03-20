@@ -1,0 +1,7 @@
+com\models\User.class
+com\models\Product.class
+com\models\JsonReader.class
+com\service\ValidatePaymentService.class
+com\service\FactureService.class
+com\models\Facture.class
+com\client\FactureClient.class
