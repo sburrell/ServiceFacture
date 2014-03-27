@@ -1,5 +1,7 @@
 package com.models;
 
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -80,16 +82,25 @@ public class Facture {
 	}
 
 	public static Facture getFactureById(String id){			
-		// get from DB		
-		Product p1 = new Product("book", 20.00, 2);
-		Product p2 = new Product("shirt", 25.00, 1);
-		Product p3 = new Product("cd", 10.00, 3);
-		ArrayList<Product> tmpproducts = new ArrayList();
-		tmpproducts.add(p1);
-		tmpproducts.add(p2);
-		tmpproducts.add(p3);
-		Facture myFacture = new Facture(new Date(System.currentTimeMillis()), 1, tmpproducts);
-		return myFacture;
+		ConnectionDB myDB = new ConnectionDB();
+		String sql = "SELECT * FROM Factures WHERE ID=" + id;
+		try {
+			ResultSet rs = myDB.readDataBase(sql);
+			Facture myFacture = new Facture();
+			
+			if(rs.next()){
+				//myFacture.setId(rs.getLong("ID"));
+				myFacture.setDatetime(rs.getDate("Date"));
+				//myFacture.setCommandeId(rs.getLong("CommandeId"));
+				//myFacture.setTotal(rs.getDouble("Total"));
+				myFacture.setIsPaid(rs.getBoolean("isPaid"));
+			}
+			return myFacture;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	public static Facture getFactureByCommandID(String strId) {
