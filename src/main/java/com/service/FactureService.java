@@ -57,7 +57,7 @@ public class FactureService {
 	// requests.
 	@GET
 	@Path("/product/{id}")
-	@Produces("text/plain")
+	@Produces(MediaType.APPLICATION_JSON)
 	public String getProductByIdFromCartService(@PathParam("id") String strId) throws JSONException {		
 		Product p1 = new Product("book", 30.00, 3);
 		Gson gson = new Gson();
