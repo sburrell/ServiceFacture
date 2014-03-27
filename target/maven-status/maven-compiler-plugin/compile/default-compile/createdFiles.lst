@@ -4,4 +4,5 @@ com\models\JsonReader.class
 com\service\ValidatePaymentService.class
 com\service\FactureService.class
 com\models\Facture.class
+com\models\ConnectionDB.class
 com\client\FactureClient.class
