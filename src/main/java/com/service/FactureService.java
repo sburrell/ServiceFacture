@@ -67,6 +67,13 @@ public class FactureService {
 	public String getCommandeFromJson(String parameters) {			
 		Gson gson = new Gson();
 		User user = this.getUserByID(parameters);
+		
+		Facture myFacture = new Facture();
+		myFacture.setDatetime(new java.util.Date());
+		myFacture.setCommandeId(2);
+		myFacture.setIsPaid(false);
+		myFacture.setTotal(45.67);
+		myFacture.insertFacture();
 		return "ok";
 	}
 	

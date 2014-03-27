@@ -12,7 +12,7 @@ import java.util.UUID;
 public class Facture {
 	private int id;
 	private Date datetime;
-	private int orderId;
+	private int commandeId;
 	private int userId;
 	private double total;
 	private ArrayList<Product> products;
@@ -54,12 +54,12 @@ public class Facture {
 		this.userId = userId;
 	}
 	
-	public int getOrderId() {
-		return orderId;
+	public int getCommandeId() {
+		return commandeId;
 	}
 
-	public void setOrderId(int orderId) {
-		this.orderId = orderId;
+	public void setCommandeId(int commandeId) {
+		this.commandeId = commandeId;
 	}
 
 	public double getTotal() {
@@ -131,6 +131,29 @@ public class Facture {
 		return null;
 	}
 	
+	public void insertFacture(){
+		ConnectionDB myDB = new ConnectionDB();
+		int id = this.getId();
+		Date date = this.getDatetime();
+		int commandeId = this.getCommandeId();
+		double total = this.getTotal();
+		Boolean isPaid = this.isIsPaid();
+		
+		String sql = "INSERT INTO Facture VALUES "
+				+ date + ", "
+				+ commandeId + ", "
+				+ total + ", "
+				+ isPaid;
+		
+		try {
+			ResultSet rs = myDB.readDataBase(sql);
+		}
+		catch(Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	public void factureToPDF(){	
 		try {
 			File monPDF = new File("Facture.txt");
