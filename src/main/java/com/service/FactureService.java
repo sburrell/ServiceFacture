@@ -1,8 +1,10 @@
 package com.service;
 
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.UUID;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -42,7 +44,7 @@ public class FactureService {
 	// @GET here defines, this method will method will process HTTP GET
 		// requests.
 		@GET
-		@Path("/commande/{id}")
+		@Path("/commandeId/{id}")
 		@Produces(MediaType.APPLICATION_JSON)
 		public String getFactureByCommandeId(@PathParam("id") String strId) {		
 			Facture facture = Facture.getFactureById(strId);
@@ -55,22 +57,24 @@ public class FactureService {
 	// requests.
 	@GET
 	@Path("/product/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String getProduct(@PathParam("id") String strId) throws JSONException {		
+	@Produces("text/plain")
+	public String getProductByIdFromCartService(@PathParam("id") String strId) throws JSONException {		
 		Product p1 = new Product("book", 30.00, 3);
 		Gson gson = new Gson();
 		String response  = gson.toJson(p1);
 		String testjson="{'id':1,'product_id':1,'user_id':1,'quantity':null,'url':'http://webservicecommande-85865.euw1.nitrousbox.com/carts/1.json'},{'id':2,'product_id':1,'user_id':1,'quantity':5,'url':'http://webservicecommande-85865.euw1.nitrousbox.com/carts/2.json'}";		
 		//User user = this.getUserByID(parameters);
 		JSONObject jo = new JSONObject(testjson);
+		
 		String userId = jo.get("user_id").toString();
+		
 		return userId;
 	}
 	
 	// @POST here defines, this method will method will process HTTP POST
 	// requests.
 	@POST
-	@Path("/commandePost/")
+	@Path("/commande")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createFactureFromJson(String parameters) throws JSONException {			
 		
@@ -82,6 +86,32 @@ public class FactureService {
 	{
 		
 		return null;
+	}
+	
+	public String getProductStringByID(String strId) throws IOException
+	{
+		URL url = new URL("http://webservicecommande-85865.euw1.nitrousbox.com/products/"+strId+".json");
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Accept", "application/json");
+		
+		if (conn.getResponseCode() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : "
+					+ conn.getResponseCode());
+		}
+ 
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+			(conn.getInputStream())));
+ 
+		String output;
+		System.out.println("Output from Server .... \n");
+		while ((output = br.readLine()) != null) {
+			System.out.println(output);
+		}
+		
+		conn.disconnect();
+		return output;
+			
 	}
 
 }
