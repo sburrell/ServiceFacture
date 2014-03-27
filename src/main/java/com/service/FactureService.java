@@ -11,6 +11,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 import com.google.gson.Gson;
 import com.models.Facture;
@@ -52,22 +56,26 @@ public class FactureService {
 	@GET
 	@Path("/product/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public String getProduct(@PathParam("id") String strId) {		
+	public String getProduct(@PathParam("id") String strId) throws JSONException {		
 		Product p1 = new Product("book", 30.00, 3);
 		Gson gson = new Gson();
 		String response  = gson.toJson(p1);
-		return response;
+		String testjson="{'id':1,'product_id':1,'user_id':1,'quantity':null,'url':'http://webservicecommande-85865.euw1.nitrousbox.com/carts/1.json'},{'id':2,'product_id':1,'user_id':1,'quantity':5,'url':'http://webservicecommande-85865.euw1.nitrousbox.com/carts/2.json'}";		
+		//User user = this.getUserByID(parameters);
+		JSONObject jo = new JSONObject(testjson);
+		String userId = jo.get("user_id").toString();
+		return userId;
 	}
 	
 	// @POST here defines, this method will method will process HTTP POST
 	// requests.
 	@POST
-	@Path("/commande/")
+	@Path("/commandePost/")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String getCommandeFromJson(String parameters) {			
-		Gson gson = new Gson();
-		User user = this.getUserByID(parameters);
-		return "ok";
+	public Response createFactureFromJson(String parameters) throws JSONException {			
+		
+		String result = "Facture created : ";
+		return Response.status(200).entity(result).build();
 	}
 	
 	public User getUserByID(String userId)

@@ -1,7 +1,10 @@
 package com.service;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 import java.sql.Date;
@@ -39,13 +42,30 @@ public class ValidatePaymentService {
 		Facture validatedFacture = facture;
 		Gson gson = new Gson();
 		gson.toJson(facture);
-		URL myURL = new URL("http://jarrodssite.com/DeliveryService/notify");
-	    URLConnection myURLConnection = myURL.openConnection();
-	    myURLConnection.connect();
-	    myURLConnection.setDoOutput(true);
-	    OutputStreamWriter out = new OutputStreamWriter(myURLConnection.getOutputStream());
+		URL url = new URL("http://jarrodssite.com/DeliveryService/notify");
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+		conn.setRequestMethod("GET");
+		conn.setRequestProperty("Accept", "application/json");
+		
+		if (conn.getResponseCode() != 200) {
+			throw new RuntimeException("Failed : HTTP error code : "
+					+ conn.getResponseCode());
+		}
+ 
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+			(conn.getInputStream())));
+ 
+		String output;
+		System.out.println("Output from Server .... \n");
+		while ((output = br.readLine()) != null) {
+			System.out.println(output);
+		}
+ 
+		conn.disconnect();
+		/*
+	    OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
 	    out.write("string=" + gson);
-	    out.close();
+	    out.close();*/
 	    
 	}
 	
