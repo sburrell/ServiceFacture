@@ -15,6 +15,7 @@ import javax.ws.rs.core.MediaType;
 import com.google.gson.Gson;
 import com.models.Facture;
 import com.models.Product;
+import com.models.User;
 
 
 // @Path here defines class level path. Identifies the URI path that&nbsp;
@@ -63,11 +64,16 @@ public class FactureService {
 	@POST
 	@Path("/commande/")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public String getCommandeFromJson(String parameters) {	
-		
+	public String getCommandeFromJson(String parameters) {			
 		Gson gson = new Gson();
-		Product p1  = gson.fromJson(parameters, Product.class);
+		User user = this.getUserByID(parameters);
 		return "ok";
+	}
+	
+	public User getUserByID(String userId)
+	{
+		
+		return null;
 	}
 
 }
