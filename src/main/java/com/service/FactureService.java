@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -44,14 +46,15 @@ public class FactureService {
 		return response;
 	}
 	
-	// @GET here defines, this method will method will process HTTP GET
+	// @POST here defines, this method will method will process HTTP POST
 	// requests.
-	@GET
-	@Path("/commande/{id}.json")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String getCommandeFromJson(@PathParam("json") String json) {		
+	@POST
+	@Path("/commande/")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public String getCommandeFromJson(String parameters) {	
+		
 		Gson gson = new Gson();
-		Product p1  = gson.fromJson(json, Product.class);
+		Product p1  = gson.fromJson(parameters, Product.class);
 		return "ok";
 	}
 
