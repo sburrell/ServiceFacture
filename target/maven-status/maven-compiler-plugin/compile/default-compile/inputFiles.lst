@@ -1,7 +1,8 @@
-C:\Users\clodagh\workspace\JAVA_PROJECTS\RestfulExo\src\main\java\com\models\User.java
-C:\Users\clodagh\workspace\JAVA_PROJECTS\RestfulExo\src\main\java\com\service\ValidatePaymentService.java
-C:\Users\clodagh\workspace\JAVA_PROJECTS\RestfulExo\src\main\java\com\service\FactureService.java
-C:\Users\clodagh\workspace\JAVA_PROJECTS\RestfulExo\src\main\java\com\models\Facture.java
-C:\Users\clodagh\workspace\JAVA_PROJECTS\RestfulExo\src\main\java\com\models\Product.java
-C:\Users\clodagh\workspace\JAVA_PROJECTS\RestfulExo\src\main\java\com\client\FactureClient.java
-C:\Users\clodagh\workspace\JAVA_PROJECTS\RestfulExo\src\main\java\com\models\JsonReader.java
+C:\Users\Sarah\workspace\WebservicesExample\ServiceFacture\src\main\java\com\models\Product.java
+C:\Users\Sarah\workspace\WebservicesExample\ServiceFacture\src\main\java\com\models\Facture.java
+C:\Users\Sarah\workspace\WebservicesExample\ServiceFacture\src\main\java\com\models\ConnectionDB.java
+C:\Users\Sarah\workspace\WebservicesExample\ServiceFacture\src\main\java\com\service\FactureService.java
+C:\Users\Sarah\workspace\WebservicesExample\ServiceFacture\src\main\java\com\client\FactureClient.java
+C:\Users\Sarah\workspace\WebservicesExample\ServiceFacture\src\main\java\com\service\ValidatePaymentService.java
+C:\Users\Sarah\workspace\WebservicesExample\ServiceFacture\src\main\java\com\models\User.java
+C:\Users\Sarah\workspace\WebservicesExample\ServiceFacture\src\main\java\com\models\JsonReader.java

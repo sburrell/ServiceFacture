@@ -1,5 +1,8 @@
 package com.models;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date;
@@ -9,6 +12,7 @@ import java.util.UUID;
 public class Facture {
 	private int id;
 	private Date datetime;
+	private int orderId;
 	private int userId;
 	private double total;
 	private ArrayList<Product> products;
@@ -49,19 +53,21 @@ public class Facture {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+	
+	public int getOrderId() {
+		return orderId;
+	}
+
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
 
 	public double getTotal() {
 		return total;
 	}
 
-	public void setTotal() {
-		if(this.products.size()!=0)
-		{
-			for(Product p: this.products)
-			{
-				this.total += p.getPrice();
-			}
-		}
+	public void setTotal(double total) {
+		this.total = total;
 	}
 
 	public ArrayList<Product> getProducts() {
@@ -70,7 +76,7 @@ public class Facture {
 
 	public void setProducts(ArrayList<Product> products) {
 		this.products = products;
-		setTotal();
+		//setTotal();
 	}
 		
 	public boolean isIsPaid() {
@@ -89,10 +95,10 @@ public class Facture {
 			Facture myFacture = new Facture();
 			
 			if(rs.next()){
-				//myFacture.setId(rs.getLong("ID"));
+				myFacture.setId(rs.getInt("ID"));
 				myFacture.setDatetime(rs.getDate("Date"));
 				//myFacture.setCommandeId(rs.getLong("CommandeId"));
-				//myFacture.setTotal(rs.getDouble("Total"));
+				myFacture.setTotal(rs.getDouble("Total"));
 				myFacture.setIsPaid(rs.getBoolean("isPaid"));
 			}
 			return myFacture;
@@ -103,16 +109,38 @@ public class Facture {
 		return null;
 	}
 	
-	public static Facture getFactureByCommandID(String strId) {
-		Product p1 = new Product("book", 20.00, 2);
-		Product p2 = new Product("shirt", 25.00, 1);
-		Product p3 = new Product("cd", 10.00, 3);
-		ArrayList<Product> tmpproducts = new ArrayList();
-		tmpproducts.add(p1);
-		tmpproducts.add(p2);
-		tmpproducts.add(p3);
-		Facture myFacture = new Facture(new Date(System.currentTimeMillis()), 1, tmpproducts);
-		return myFacture;
+	public static Facture getFactureByCommandID(String id) {
+		ConnectionDB myDB = new ConnectionDB();
+		String sql = "SELECT * FROM Factures WHERE CommandeId=" + id;
+		try {
+			ResultSet rs = myDB.readDataBase(sql);
+			Facture myFacture = new Facture();
+			if(rs.next()){
+				myFacture.setId(rs.getInt("ID"));
+				myFacture.setDatetime(rs.getDate("Date"));
+				//myFacture.setCommandeId(rs.getLong("CommandeId"));
+				myFacture.setTotal(rs.getDouble("Total"));
+				myFacture.setIsPaid(rs.getBoolean("isPaid"));
+			}
+			return myFacture;
+		}
+		catch(Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public void factureToPDF(){	
+		try {
+			File monPDF = new File("Facture.txt");
+			monPDF.createNewFile();
+			FileWriter fw = new FileWriter(monPDF);
+			fw.write(this.toString());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
