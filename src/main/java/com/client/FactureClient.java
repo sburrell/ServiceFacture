@@ -10,8 +10,8 @@ import com.sun.jersey.api.client.config.ClientConfig;
 import com.sun.jersey.api.client.config.DefaultClientConfig;
 
 public class FactureClient {
-	public static final String BASE_URI = "http://webservicecommande-85865.euw1.nitrousbox.com";
-	public static final String PATH_ID = "/products/2.json";
+	public static final String BASE_URI = "http://localhost:8080/RestfulExo";
+	public static final String PATH_ID = "/FactureService/commande/";
 
 	public static void main(String[] args) {
 		UUID id = UUID.randomUUID();
