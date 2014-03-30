@@ -85,7 +85,10 @@ public class FactureService {
 		myFacture.setCommandeId(2);
 		myFacture.setIsPaid(false);
 		myFacture.setTotal(45.67);
+		//insertion en base
 		myFacture.insertFacture();
+		// création de la facture en txt
+		myFacture.toFile();
 		String result = "Facture created : ";
 		return Response.status(200).entity(result).build();
 	}

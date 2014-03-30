@@ -30,6 +30,16 @@ public class Facture {
 		this.IsPaid = false;
 	}
 
+	public Facture(int id, Date datetime, int commandeId, double total,
+			boolean isPaid) {
+		super();
+		this.id = id;
+		this.datetime = datetime;
+		this.commandeId = commandeId;
+		this.total = total;
+		IsPaid = isPaid;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -97,11 +107,64 @@ public class Facture {
 			if(rs.next()){
 				myFacture.setId(rs.getInt("ID"));
 				myFacture.setDatetime(rs.getDate("Date"));
-				//myFacture.setCommandeId(rs.getLong("CommandeId"));
+				myFacture.setCommandeId(rs.getInt("CommandeId"));
 				myFacture.setTotal(rs.getDouble("Total"));
 				myFacture.setIsPaid(rs.getBoolean("isPaid"));
 			}
 			return myFacture;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<Facture> getFacturesByDate(Date date){			
+		ConnectionDB myDB = new ConnectionDB();
+		String sql = "SELECT * FROM Factures WHERE DATE=" + date;
+		ArrayList<Facture> myFactures = new ArrayList<Facture>();
+		try {
+			ResultSet rs = myDB.readDataBase(sql);
+			while(rs.next()){
+				Facture f = new Facture(rs.getInt("ID"), rs.getDate("Date"), rs.getInt("CommandeId"), rs.getDouble("Total"), rs.getBoolean("isPaid"));			
+				myFactures.add(f);
+			}
+			return myFactures;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<Facture> getPaidFactures(){			
+		ConnectionDB myDB = new ConnectionDB();
+		String sql = "SELECT * FROM Factures WHERE isPaid=" + true;
+		ArrayList<Facture> myFactures = new ArrayList<Facture>();
+		try {
+			ResultSet rs = myDB.readDataBase(sql);
+			while(rs.next()){
+				Facture f = new Facture(rs.getInt("ID"), rs.getDate("Date"), rs.getInt("CommandeId"), rs.getDouble("Total"), rs.getBoolean("isPaid"));			
+				myFactures.add(f);
+			}
+			return myFactures;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	public ArrayList<Facture> getUnPaidFactures(){			
+		ConnectionDB myDB = new ConnectionDB();
+		String sql = "SELECT * FROM Factures WHERE isPaid=" + false;
+		ArrayList<Facture> myFactures = new ArrayList<Facture>();
+		try {
+			ResultSet rs = myDB.readDataBase(sql);
+			while(rs.next()){
+				Facture f = new Facture(rs.getInt("ID"), rs.getDate("Date"), rs.getInt("CommandeId"), rs.getDouble("Total"), rs.getBoolean("isPaid"));			
+				myFactures.add(f);
+			}
+			return myFactures;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -118,7 +181,7 @@ public class Facture {
 			if(rs.next()){
 				myFacture.setId(rs.getInt("ID"));
 				myFacture.setDatetime(rs.getDate("Date"));
-				//myFacture.setCommandeId(rs.getLong("CommandeId"));
+				myFacture.setCommandeId(rs.getInt("CommandeId"));
 				myFacture.setTotal(rs.getDouble("Total"));
 				myFacture.setIsPaid(rs.getBoolean("isPaid"));
 			}
@@ -133,7 +196,6 @@ public class Facture {
 	
 	public void insertFacture(){
 		ConnectionDB myDB = new ConnectionDB();
-		int id = this.getId();
 		Date date = this.getDatetime();
 		int commandeId = this.getCommandeId();
 		double total = this.getTotal();
@@ -154,9 +216,10 @@ public class Facture {
 		}
 		
 	}
-	public void factureToPDF(){	
+	//Fonction créant un fichier txt de la facture
+	public void toFile(){	
 		try {
-			File monPDF = new File("Facture.txt");
+			File monPDF = new File("Facture" + this.getId() +".txt");
 			monPDF.createNewFile();
 			FileWriter fw = new FileWriter(monPDF);
 			fw.write(this.toString());
