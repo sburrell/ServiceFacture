@@ -62,10 +62,6 @@ public class ValidatePaymentService {
 		}
  
 		conn.disconnect();
-		/*
-	    OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
-	    out.write("string=" + gson);
-	    out.close();*/
 	    
 	}
 	
